@@ -1,26 +1,27 @@
-from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler, ConversationHandler)
-from telegram import (ChatAction, ReplyKeyboardMarkup, ReplyKeyboardRemove)
-from os import _exit
-import os
-import configparser
+
 import db_operator as myDB
-from flask import Flask
+from flask import Flask, redirect, url_for, render_template, session
 
 import logging
 
 # Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.ERROR)
+    level=logging.INFO)
 
 app = Flask(__name__)
-
+app.secret_key = "veryveryveryfucsdakjkkingseckjsbtydfdcretkey"
 
 
 
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def home():
+    return redirect(url_for('index'))
+
+@app.route('/index')
+def index():
+    tasks = myDB.showTasks()
+    return render_template("index.html", tasks=tasks)
 
 
 if __name__ == '__main__':

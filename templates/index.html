@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TaskList</title>
+</head>
+<body>
+<h1>Welcome to your task list</h1>
+<div>
+    {% if name=="" %}
+
+    <form action="{{ url_for('welcome') }}" method="post">
+      <!-- action is the name of the route -->
+      <p>Enter name:
+        <input type="text" name="username" />
+        <input type="text" name="password" />
+        <input type="submit" class="btn btn-primary" value="Login" />
+      </p>
+
+    </form>
+
+    {% else %}
+
+    <a><a href="{{ url_for('logout') }}">Logout</a></p>
+
+    {% endif %}
+
+</div>
+</body>
+</html>

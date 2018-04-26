@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TaskList</title>
+</head>
+<body>
+<p>Hello, this is your tasks list:</p>
+<div>
+    {% if tasks != "" %}
+    {% for task in tasks %}
+        <p>{{ task }}</p>
+    {% endfor %}
+    {% else %}
+        <td>no task memorized yet</td>
+    {% endif %}
+
+</div>
+</body>
+</html>
