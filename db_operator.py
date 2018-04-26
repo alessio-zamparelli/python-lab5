@@ -69,16 +69,17 @@ def newTask(arg):
         return ""
 
 
-def removeTask(arg):
+def removeTask(task, username):
     # msg = ' '.join(args)
     try:
         con = sql.connect(user=confUser, password=confPwd, database=confDB, host=confHost)
         cur = con.cursor()
-        cur.execute("delete from task where todo = %s", (arg, ))
+        res = cur.execute("delete from task where todo = %s AND username=%s", (task, username))
         con.commit()
         cur.close()
         con.close()
         print(arg + " removed")
+        return res
     except ValueError:
         print("element not found!")
 

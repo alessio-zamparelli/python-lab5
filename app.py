@@ -22,7 +22,7 @@ def home():
 def index():
     username = session.get('username', '')
     if username != '':
-        return render_template(url_for('taskList'))
+        return redirect(url_for('taskList'))
     else:
         return render_template("index.html")
 
@@ -33,8 +33,25 @@ def taskList():
         username = request.form['username']
         session['username'] = username
     tasks = myDB.showTasks(username)
-    return render_template("tasklist.html", tasks=tasks)
+    return render_template("tasklist.html", tasks=tasks, username=username)
 
+@app.route('/tasklist', methods=['GET'])
+def taskListGet():
+    username = session.get('username', '')
+    tasks = myDB.showTasks(username)
+    print(tasks)
+    return render_template("tasklist.html", tasks=tasks, username=username)
+
+@app.route('/deletetask', methods=["POST"])
+def deleteTask():
+    username = session.get('username', '')
+    if(username==''):
+        print("errore, nome non esistente")
+    else:
+        task_id = request.form['task_id']
+        res = myDB.removeTask(task_id, username)
+        if res==0
+            print("non ho cancellato un cazzo?")
 
 @app.route('/logout')
 def logout():
