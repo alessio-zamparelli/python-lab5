@@ -29,11 +29,12 @@ def start():
         print("errore nell'apertura del db " + DBerror.args[0])
         sys.exit(1)
 
-def showTasks():
+def showTasks(username):
     con = sql.connect(user=confUser, password=confPwd, database=confDB, host=confHost)
     try:
         cur = con.cursor()
-        cur.execute("select todo from task order by todo")
+        sql_query = "select id, todo from task where username = %s order by todo asc;"
+        cur.execute(sql_query, (username,))
         rows = cur.fetchall()
         cur.close()
     except sql.DataError as DataErr:
@@ -44,7 +45,7 @@ def showTasks():
 
     if len(rows) == 0:
         return None
-    rows = [i[0] for i in rows]
+    #rows = [i[0] for i in rows]
     return rows
 
 
@@ -94,7 +95,7 @@ def removeAllTasks(arg):
     print("Deleted ALL tasks containing " + arg)
 
 if __name__ == '__main__':
-    print(showTasks())
+    print(showTasks("ale"))
     #removeAllTasks("task")
     #task2 = "task di prova 2"
     #newTask(task2)

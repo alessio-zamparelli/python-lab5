@@ -8,13 +8,18 @@
 <p>Hello, this is your tasks list:</p>
 <div>
     {% if tasks != "" %}
+        <p>id    task</p>
     {% for task in tasks %}
-        <p>{{ task }}</p>
+        <p>{{ task[0] }} : {{ task[1] }}</p>
+
     {% endfor %}
     {% else %}
         <td>no task memorized yet</td>
     {% endif %}
 
 </div>
+
+<a><a href="{{ url_for('logout') }}">Logout</a></p>
+
 </body>
 </html>

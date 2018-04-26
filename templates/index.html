@@ -5,25 +5,19 @@
     <title>TaskList</title>
 </head>
 <body>
-<h1>Welcome to your task list</h1>
+<h1>Welcome to your task list WebApp</h1>
 <div>
-    {% if name=="" %}
 
-    <form action="{{ url_for('welcome') }}" method="post">
+    <form action="{{ url_for('taskList') }}" method="post">
       <!-- action is the name of the route -->
-      <p>Enter name:
+      <p>Username:
         <input type="text" name="username" />
-        <input type="text" name="password" />
         <input type="submit" class="btn btn-primary" value="Login" />
       </p>
 
     </form>
 
-    {% else %}
 
-    <a><a href="{{ url_for('logout') }}">Logout</a></p>
-
-    {% endif %}
 
 </div>
 </body>

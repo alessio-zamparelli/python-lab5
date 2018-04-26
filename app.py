@@ -1,6 +1,6 @@
 
 import db_operator as myDB
-from flask import Flask, redirect, url_for, render_template, session
+from flask import Flask, redirect, url_for, render_template, session, request
 
 import logging
 
@@ -20,9 +20,26 @@ def home():
 
 @app.route('/index')
 def index():
-    tasks = myDB.showTasks()
-    return render_template("index.html", tasks=tasks)
+    username = session.get('username', '')
+    if username != '':
+        return render_template(url_for('taskList'))
+    else:
+        return render_template("index.html")
 
+@app.route('/tasklist', methods=['POST'])
+def taskList():
+    username = session.get('username', '')
+    if username=='':
+        username = request.form['username']
+        session['username'] = username
+    tasks = myDB.showTasks(username)
+    return render_template("tasklist.html", tasks=tasks)
+
+
+@app.route('/logout')
+def logout():
+    del (session['username'])
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run()
