@@ -50,8 +50,25 @@ def deleteTask():
     else:
         task_id = request.form['task_id']
         res = myDB.removeTask(task_id, username)
-        if res==0
+        if res==0:
             print("non ho cancellato un cazzo?")
+        else:
+            print("ho cancellato il task con id: " + task_id + " appartenente ad: " + username)
+    return redirect(url_for('index'))
+
+@app.route('/addtask', methods=["POST"])
+def addTask():
+    username = session.get('username', '')
+    if(username==''):
+        print("errore, nome non esistente")
+    else:
+        todo = request.form['todo']
+        res = myDB.newTask(todo, username)
+        if res==0:
+            print("non ho inserito un cazzo?")
+        else:
+            print("ho inserito il task con id: " + todo + " appartenente ad: " + username)
+    return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():

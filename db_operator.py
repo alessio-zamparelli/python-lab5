@@ -50,35 +50,35 @@ def showTasks(username):
 
 
 
-def newTask(arg):
+def newTask(todo, username):
     # msg = ' '.join(arg)
-    if (arg != ""):
+    if (todo != ""):
         con = sql.connect(user=confUser, password=confPwd, database=confDB, host=confHost)
         cur = con.cursor()
-        cur.execute(
-            "insert into task (todo) values (%s)", (arg, ))
+        sql_query = "insert into task (todo, username) values (%s, %s)"
+        cur.execute(sql_query, (todo, username))
         con.commit()
         cur.close()
         con.close()
 
         # showTasks(bot, update)
-        print("added " + arg + " to the tasks list")
-        return arg
+        print("added " + todo + " to the tasks list")
+        return todo
     else:
         print("empty task...")
         return ""
 
 
-def removeTask(task, username):
+def removeTask(task_id, username):
     # msg = ' '.join(args)
     try:
         con = sql.connect(user=confUser, password=confPwd, database=confDB, host=confHost)
         cur = con.cursor()
-        res = cur.execute("delete from task where todo = %s AND username=%s", (task, username))
+        sql_query = "delete from task where id = %s AND username=%s;"
+        res = cur.execute(sql_query, (task_id, username))
         con.commit()
         cur.close()
         con.close()
-        print(arg + " removed")
         return res
     except ValueError:
         print("element not found!")

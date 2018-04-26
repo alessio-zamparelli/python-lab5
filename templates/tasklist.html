@@ -14,35 +14,51 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
 
     <h2>Hello {{ username }}, this is your tasks list:</h2>
+
     {% if tasks != "" %}
+
+        <p>
+
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Task</th>
+                    <th>Here you can see all existing tasks</th>
+
                 </tr>
             </thead>
             <tbody>
                 {% for task in tasks %}
                     <tr>
-                        <td>{{ task[0] }}</td>
                         <td>{{ task[1] }}</td>
+                        <td>
+                        <form action="{{ url_for('deleteTask') }}" method="post">
+                            <button type="submit" class="btn btn-primary" name="task_id" value="{{ task[0] }}">DELETE</input>
+                        </form>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
-
+        </table>
+        </p>
     {% else %}
-        <td>no task memorized yet</td>
-    {% endif %}
 
-    <form action="{{ url_for('taskList') }}" method="post">
-        <!-- action is the name of the route -->
-        <p>Username:
-        <input type="text" name="task_id" />
-        <input type="submit" class="btn btn-primary" value="delete" />
+        <p>no task memorized yet</p>
+    {% endif %}
+<!--
+    <form action="{{ url_for('deleteTask') }}" method="post">
+        <p>Delete task:
+            <input type="text" name="task_id" placeholder="task id">
+            <input type="submit" class="btn btn-primary" value="DELETE" />
+        </p>
+-->
+    </form>
+    <form action="{{ url_for('addTask') }}" method="post">
+        <p>Add a new task:
+        <input type="text" name="todo" placeholder="todo">
+        <input type="submit" class="btn btn-primary" value="ADD" />
       </p>
 
     </form>
